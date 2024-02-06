@@ -1,0 +1,82 @@
+---
+sidebar_label: 'STC Byte code'
+sidebar_position: 2
+---
+
+# STC Byte code
+
+The STC Byte code is a low-level representation of the STC language. It is a stack-based language, similar to the Java Byte code. The STC Byte code is used as an intermediate representation of the STC language. The STC Byte code is executed by the STC Virtual Machine (STC VM).
+
+### Example byte code
+```stc title="program.sbc"
+::HEADERS
+    stack_size 10
+    var_pool 10
+    labels 2
+    const_pool 2
+    functions 2
+::DATA
+    .foo "foro"
+    .bar "bar"
+::FUN:GLOBAL
+    push 2
+    push 4
+::FUN:FUNCT
+    add
+    dump
+    in
+```
+
+## Byte code file format
+
+The STC Byte code is stored in a file with the `.sbc` extension (STC VM Byte Code).
+
+File is divided into sections:
+- Header (`::HEADERS`)
+- Constants (`::DATA`)
+- Functions (`::FUN:[function_name]`)
+
+Each section must be in the correct order (given above).
+Section content must start with `tab`.
+
+### Headers
+```
+::HEADERS
+    attribute value
+    attribute value
+    attribute value
+```
+
+|attribute name   | matching program meta|
+|---|---|
+|stack_size   | stack_size|
+|labels |labels_size|
+|functions |functions_size |
+|var_pool |var_pool_size|
+|const_pool   |const_pool_size   |
+
+Read more about the [Headers](/docs/stc/binfiles#header-section)
+
+### Data
+Data section contains constants used in the program. Constants are stored in the following format:
+- `const_name` - name of the constant must start with `.` (dot)
+- `const_value` - value of the constant (`string` or 'array')
+```
+::DATA
+    .const_name const_value
+    .const_name onst_value
+    .const_name const_value
+```
+
+### Functions
+Function section contains the byte code of the functions. function_name is the name of the function (only 32 characters are allowed in the function name). The function name must be unique in the program. The function name must start with `::FUN:` (double colon and FUN: keyword).
+The function name must be followed by the function body (byte code).
+The function body must start with `tab` (indentation).
+Read more about the [operations](/docs/stc/vm#operations)
+```
+::FUN:function_name
+    opcode arg
+    opcode arg
+    opcode
+```
+

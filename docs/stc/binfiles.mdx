@@ -1,0 +1,143 @@
+---
+sidebar_label: 'Binary Files'
+sidebar_position: 2
+---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Stack code binary files
+
+## Compiling to bin files
+
+<Tabs>
+    <TabItem value="bc" label="Byte Code" default>
+        ```bash
+        stc compile --bc [filename.sbc]
+        ```
+    </TabItem>
+    <TabItem value="camel" label="Camel">
+        ```bash
+        stc compile --camel [filename.camel]
+        ```
+    </TabItem>
+
+</Tabs>
+
+## Binary file structure
+
+Binary file contains structure of program divided into sections.
+:::note[`C` representation of program in `STCVM`]
+```C
+struct program
+{
+    program_meta *meta;
+    pool_element *const_pool;
+    element *var_pool;
+    function *functions;
+    void *const_pool_stack;
+    element *stack;
+};
+```
+:::
+
+
+### Header Section
+Header Section has got program metadata:
+- `const_pool_size`: size of constant pool
+- `functions_size`: number of functions in program
+- `labels_size`: number of labels in program
+- `stack_size`: size of program stack
+- `var_pool_size`: size of variable pool available for program
+- `const_stack_size`: size of constant pool stack where constants are stored
+
+:::note[`C` representation of Header Section in `STCVM`]
+```C
+struct program_meta
+{
+    size_t const_pool_size;
+    size_t functions_size;
+    size_t labels_size;
+    size_t stack_size;
+    size_t var_pool_size;
+    size_t const_stack_size;
+};
+```
+:::
+
+### Constants Definitions Section
+Constants Definitions Section contains all constants definitions used in program. Constants values are stored in next section constant pool. This section is an array of `pool_element` structures. Each `pool_element` structure contains type, size of constant and address to constant value.
+The constant could be of type `string` and `array`
+:::note[`C` representation of pool_element in `STCVM`]
+```C
+typedef pool_element
+{
+    type t;
+    size_t size;
+    size_t addr;
+};
+```
+:::
+
+### Constants Pool Section
+Constants Pool Section contains all constants values used in program.
+
+### Functions Definition Section
+This section are array of `function` structures. Each `function` structure contains:
+- `name`: name of function (max 32 characters)
+- `num_args`: number of arguments
+- `id`: unique id of function
+- `addr`: address of operations in binary file
+- `code_size`: size of operations in binary file
+
+:::note[`C` representation of function in `STCVM`]
+```C
+strucr function
+{
+    size_t num_args;
+    size_t id;
+    size_t code_size;
+    char name[32];
+    size_t code_addr;
+};
+```
+:::
+
+### Operations Section
+Operations Section contains all operations used in program. Each operation is represented by `operation` structure. The `operation` structure contains:
+- `opcode`: operation code
+- `payload_type`: type of payload
+- `payload`: value of payload
+
+Readmore about operations in [Operations](/docs/stc/vm#operations)
+
+:::note[`C` representation of operation in `STCVM`]
+```C
+operation struct
+{
+    opcode code;
+    type payload_type;
+    value payload;
+} ;
+```
+:::
+
+### Variables Pool Section
+
+This pool is used to store variables in program. Each variable is represented by `element` structure. Pool could only store simple types like `number`, `ptr`, `type`, `bool` and `char`. Complex variables like `array` and `string` are stored in constant pool or in heap and can be accessed by `ptr` type.
+The `element` structure contains:
+- `t`: type of variable
+- `val`: value of variable
+
+:::note[`C` representation of element in `STCVM`]
+```C
+struct element
+{
+    type t;
+    value val;
+};
+```
+:::
+
+### Stack Section
+
+This section is used to store program stack. Stack is represented by `element` structure like in [Variables Pool Section](#variables-pool-section)
