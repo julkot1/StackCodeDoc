@@ -1,0 +1,64 @@
+---
+sidebar_label: 'Compiler Config'
+sidebar_position: 2
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Configurate compiler
+
+To ensure the Stack Code compiler functions correctly, update the compiler configuration file `config.toml`.
+
+## Configuration Structure
+
+
+The `Config` struct defines the configuration options for your application. These options can be specified in a TOML configuration file. Each field is described below:
+
+| Field Name      | TOML Key         | Type    | Description                                                                 |
+|------------------|------------------|---------|-----------------------------------------------------------------------------|
+| `RootPath`      | `root_path`      | string  | The root directory path for the project.                                   |
+| `Destination`   | `destination`    | string  | The output directory where generated files will be stored.                 |
+| `CompileLibs`   | `compile_libs`   | bool    | A flag indicating whether to compile libraries.                            |
+| `ClangPath`     | `clang_path`     | string  | The file path to the Clang compiler executable.                            |
+| `LlcPath`       | `llc_path`       | string  | The file path to the LLVM `llc` tool for compiling LLVM intermediate code. |
+| `LLDisPath`     | `llc_dis_path`   | string  | The file path to the LLVM `lldis` tool for disassembling LLVM bytecode.    |
+| `LinkerPath`    | `linker_path`    | string  | The file path to the linker executable.                                    |
+
+
+-----
+
+
+:::tip
+
+Use **clang** and **llvm** in 14 version.
+
+:::
+
+:::info
+
+Before starting using compilator to write programs compile build in libs
+
+:::
+
+## Exaple config file
+
+```TOML title="config.toml"
+[Config]
+root_path = ".."
+destination = "build"
+compile_libs = true
+compilation_script = "compile.sh"
+clang_path = "/usr/lib/llvm14/bin/clang"
+linker_path = "/usr/lib/llvm14/bin/llvm-link"
+llc_path =  "/usr/lib/llvm14/bin/llc"
+llc_dis_path =  "/usr/lib/llvm14/bin/llvm-dis"
+
+[Libs]
+lib_root = "lib/src"
+lib_path = "lib/bin"
+lib_raw = [
+    "arithmetic", "logic", "io", "array"
+]
+```
+

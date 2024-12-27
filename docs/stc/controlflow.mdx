@@ -1,0 +1,90 @@
+---
+sidebar_label: 'Control Flow'
+sidebar_position: 2
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Control Flow
+
+---
+
+## Conditional Execution (`if`)
+
+The `if` statement pops a value from the stack and executes the block if the value is non-zero (true).
+
+```stack
+3 3 == if {
+    5 print
+}
+```
+
+**Output**:
+
+```
+5
+```
+
+:::info
+**Explanation**:  
+The `if` statement pop from stack value and check if it is true (diffrent from `0`). If true, the block `{ 5 print }` is executed, printing `5`.
+:::
+
+---
+
+## Loops
+
+### Repetition (`repeat`)
+
+The `repeat` statement pops a value `n` from the stack and performs the enclosed block `n` times.
+
+```stack
+0
+5 repeat {
+    1 + print
+}
+```
+
+**Output**:
+
+```
+1
+2
+3
+4
+5
+```
+
+:::note
+**Explanation**:  
+The `repeat` statement executes the block `n` times, incrementing and printing each value starting from `0`.
+:::
+
+---
+
+### Iteration with Index
+
+The `repeat` statement can pass the current iteration index (starting from `0` to `n-1`) by assigning a variable to the statement:
+
+```stack
+0
+5 repeat (idx) {
+    idx print
+}
+```
+
+**Output**:
+
+```
+0
+1
+2
+3
+4
+```
+
+:::info
+**Explanation**:  
+The `repeat (idx)` syntax allows passing the current index as a variable, enabling access to the iteration count for more flexible loop operations.
+:::

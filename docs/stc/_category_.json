@@ -1,8 +1,8 @@
 {
-  "label": "Stack Code VM",
+  "label": "Language",
   "position": 2,
   "link": {
     "type": "generated-index",
-    "description": "Stack Code Virtual Machine - Camel runtime"
+    "description": "Stack Code language features"
   }
 }

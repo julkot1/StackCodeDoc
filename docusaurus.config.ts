@@ -3,12 +3,12 @@ import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 
 const config: Config = {
-  title: 'Camel',
+  title: 'Stack Code',
   tagline: 'Stack oriented language',
   favicon: 'img/favicon.ico',
 
   // Set the production url of your site here
-  url: 'https://cameldoc.netlify.app',
+  url: 'https://stackcode.netlify.app',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
   baseUrl: '/',
@@ -17,7 +17,7 @@ const config: Config = {
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
   organizationName: 'julkot1', // Usually your GitHub org/user name.
-  projectName: 'CamelDoc',
+  projectName: 'stackCode',
   deploymentBranch: 'main',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
@@ -60,10 +60,10 @@ const config: Config = {
     // Replace with your project's social card
     image: 'img/docusaurus-social-card.jpg',
     navbar: {
-      title: 'Camel',
+      title: 'Stack Code',
       logo: {
-        alt: 'Camel Logo',
-        src: 'img/logo.svg',
+        alt: 'Stack Code Logo',
+        src: 'img/logo.png',
       },
       items: [
         {
@@ -82,7 +82,7 @@ const config: Config = {
     footer: {
       style: 'dark',
       links: [],
-      copyright: `Copyright © ${new Date().getFullYear()} Camel, Inc. Built with Docusaurus.`,
+      copyright: `Copyright © ${new Date().getFullYear()} Stack Code, Inc. Built with Docusaurus.`,
     },
     prism: {
       theme: prismThemes.github,

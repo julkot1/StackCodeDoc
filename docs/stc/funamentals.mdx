@@ -1,0 +1,190 @@
+---
+sidebar_label: 'Language Fundamentals'
+sidebar_position: 1
+---
+
+# Language Fundamentals
+
+## Stack Operations
+
+The stack serves as the primary data structure for all operations. Each item on the stack is 64 bits wide and includes 64 bits of type information, ensuring proper data alignment and handling. These operations work on a LIFO (Last In, First Out) basis, meaning the last element pushed onto the stack is the first to be popped.
+
+:::tip Convention
+The operation syntax follows this format: `[before operation] -> [after operation]`.
+:::
+
+### Basic Operations
+
+| **Name**    | **Operation**        | **Description**                                          |
+|-------------|---------------------:|--------------------------------------------------------|
+| `push`      | `[] -> [a]`          | Pushes the value `a` onto the stack.                      |
+| `dup`       | `[a] -> [a a]`       | Duplicates the top element of the stack.                   |
+| `pop`       | `[a b] -> [b]`       | Removes the top element from the stack.                    |
+| `swap`      | `[a b] -> [b a]`     | Swaps the top two elements of the stack.                   |
+| `rotate`    | `[a b c] -> [c b a]` | Rotates the top three elements, moving the top element to the bottom. |
+| `over`      | `[a b] -> [a b a]`   | Duplicates the second top element of the stack.            |
+
+---
+
+## Operation Overview
+
+These stack operations are fundamental for manipulating data stored in the stack. They ensure you can efficiently manage and access elements in a LIFO manner. Let’s break down how each of these operations contributes to the overall stack behavior:
+
+### Push Operation
+- **Description**: Adds a value `a` to the top of the stack.
+- **Example**: `10` results in the stack `[10]`.
+
+### Duplication (`dup`)
+- **Description**: Duplicates the top value of the stack, making a copy of the top element.
+- **Example**: Given `[10]`, applying `dup` results in `[10, 10]`.
+
+### Pop Operation (`pop`)
+- **Description**: Removes the top element from the stack.
+- **Example**: Given `[10, 20]`, applying `pop` results in `[20]`.
+
+### Swap Operation (`swap`)
+- **Description**: Swaps the top two elements of the stack.
+- **Example**: Given `[10, 20]`, applying `swap` results in `[20, 10]`.
+
+### Rotate Operation (`rot`)
+- **Description**: Rotates the top three elements of the stack, moving the top element to the bottom.
+- **Example**: Given `[10, 20, 30]`, applying `rotate` results in `[30, 20, 10]`.
+
+
+### Over Operation (`over`)
+- **Description**: Duplicates the second top element of the stack, placing it on top of the stack.
+- **Example**: Given `[10, 20]`, applying `over` results in `[10, 20, 20]`.
+
+
+---
+
+## Type System
+
+| **Type**    | **Equivalent C Type** | **Description**
+|-------------|:----------------------:|------------------------|
+| `I64`       | `long`                | A 64-bit integer.                                      |
+| `F64`       | `double`              | A 64-bit floating-point number.                         |
+| `I8`        | `char`                | A single 8-bit character.                               |
+| `Type`      | `long`                | A general-purpose type representing the size of a value. |
+| `Ref`      | `void*`                | A reference to variable |
+| `Str`      | `String`                | A chain of chars. |
+
+
+
+---
+
+## Number Types
+
+### Integer Types
+
+There are two main integer types in this system: `I8` and `I64`.
+
+#### **`I8`**
+Represents a single character.  
+- **Format**: `'x'`, where `x` is a single ASCII character.
+- **Size**: 8 bits.
+- **Usage**: Primarily used for representing small values such as characters or byte-sized numbers.
+
+#### **`I64`**
+Represents a 64-bit integer, which offers a wide range of precision and storage capacity. These integers can be defined in various numeric formats:
+
+| **Format**      | **Example** | **Description**                    |
+|------------------|------------|------------------------------------|
+| Decimal          | `123`      | Standard positive or negative integer.|
+| Hexadecimal      | `0x1A`     | Hexadecimal format, prefixed with `0x`.|
+| Octal            | `0o17`     | Octal format, prefixed with `0o`.    |
+| Binary           | `0b1010`   | Binary format, prefixed with `0b`.   |
+
+- **Decimal Format**: Represents standard base-10 numbers. Example: `123`, `-456`.
+- **Hexadecimal Format**: Used when large values are represented in base-16. Example: `0x1A`, `0x2B`.
+- **Octal Format**: Base-8 representation used in some low-level system operations. Example: `0o17`, `0O24`.
+- **Binary Format**: Base-2 representation used in systems and hardware-level operations. Example: `0b1010`, `0B1101`.
+
+#### **Floating-Point Types**
+
+The `F64` type represents a 64-bit floating-point number, which is analogous to the `double` type in C. These numbers are widely used for precision in scientific and engineering applications.
+
+- **Format**: Floating-point literals typically include a decimal point or an exponent.
+- **Examples**: `1.23`, `4.56e-2`, `-0.000123`.
+
+---
+
+### Stack Persistence Modifier
+
+The `!` suffix ensures that values used in operations remain on the stack after execution.
+#### Example
+```stc title="app.rpn"
+5 4 !+
+```
+**Before**  `!+` operation:
+```stc title="stack"
+[5 4]
+```
+
+**After**  `!+` operation:
+
+```stc stc title="stack"
+[5 4 9]
+```
+---
+
+By understanding these types and their associated operations, you can efficiently manipulate data on the stack, ensuring clarity and precision in your program.
+
+
+
+
+## Variables
+
+Variables are:
+- Dynamically typed
+- Mutable
+
+To assign a variable, use the operator `:=`. There are two methods to assign values to variables:
+
+---
+
+### Assign By Expression
+
+Assigning by expression:
+```stack
+var_name :=
+```
+
+This expression pops a value from the stack and assigns it to the variable, along with its inferred type.
+
+#### Example:
+
+```stack
+10 a :=
+```
+
+**Explanation**:  
+The value `10` is popped from the stack and assigned to `var_a` as an `I64` integer.
+
+---
+
+### Assign By Reference
+
+Assigning by reference:
+```stack
+value &var_name :=
+```
+
+First, push the value onto the stack, then reference the variable, and use the `:=` operator.
+
+#### Example:
+
+```stack
+0 a :=
+
+5 &a :=
+```
+
+**Explanation**:  
+Here, `5` is pushed onto the stack, and then the reference to the variable `var_a` is created, assigning the value.
+
+:::note
+In this method, the variable must be defined beforehand in the code.
+:::
+
+---

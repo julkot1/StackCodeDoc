@@ -1,0 +1,59 @@
+---
+sidebar_label: 'Compilator Usage'
+sidebar_position: 3
+---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Stack Code compilator CLI
+
+## `stc` (Root Command)
+The root command serves as the entry point for the `stc` CLI tool. It includes the following subcommands:
+
+### 1. `compile`
+Compiles given program files into an executable or LLVM IR, based on the provided flags.
+
+**Usage:**
+```sh title="sh"
+stc compile [files...] [flags]
+```
+
+**Arguments:**
+- `files...`: A list of source files to compile.
+
+**Flags:**
+| Flag                | Shorthand | Default | Description                                                |
+|---------------------|-----------|---------|------------------------------------------------------------|
+| `--output`          | `-o`      | `out`   | Specifies the name of the output file.                     |
+| `--opt`             | `-O`      | `0`     | Specifies the optimization level (0–3).                    |
+| `--emit-llvm`       | `-l`      | `false` | Generates output in LLVM Intermediate Representation (IR). |
+
+### 2. `libs`
+Compiles the default libraries for the `stc` tool.
+
+**Usage:**
+```sh title="sh"
+stc libs
+```
+
+### Example Usage
+
+1. Compile source files with default settings:
+   ```sh title="sh"
+   stc compile file1.rpn file2.rpn
+   ```
+
+2. Specify an output file and optimization level:
+   ```sh title="sh"
+   stc compile file1.rpn -o myprogram -O2
+   ```
+
+3. Generate LLVM IR:
+   ```sh title="sh"
+   stc compile file1.rpn -l
+   ```
+
+4. Compile default libraries:
+   ```sh title="sh"
+   stc libs
+   ```
