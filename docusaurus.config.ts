@@ -8,17 +8,17 @@ const config: Config = {
   favicon: 'img/favicon.ico',
 
   // Set the production url of your site here
-  url: 'https://stackcode.netlify.app',
+  url: 'https://github.com',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
-  baseUrl: '/',
+  baseUrl: '/StackCodeDoc/',
 
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
   organizationName: 'julkot1', // Usually your GitHub org/user name.
-  projectName: 'stackCode',
-  deploymentBranch: 'main',
+  projectName: 'StackCodeDoc',
+  deploymentBranch: 'gh-pages',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
 
@@ -73,7 +73,7 @@ const config: Config = {
           label: 'Docs',
         },
         {
-          href: 'https://github.com/julkot1/StackCode',
+          href: 'https://github.com/julkot1/rpn-lang',
           label: 'GitHub',
           position: 'right',
         },
