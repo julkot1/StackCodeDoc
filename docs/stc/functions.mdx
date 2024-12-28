@@ -1,0 +1,128 @@
+---
+sidebar_label: 'Functions'
+sidebar_position: 3
+---
+
+# Functions
+
+Functions allow you to encapsulate reusable code blocks. They are defined using the syntax `fun name { ... }`, where the function name must be unique. 
+
+The **main function** is special and serves as the **entry point** for the program. Execution begins from the `main` function. All functions share the same stack, enabling seamless data manipulation across them.
+
+---
+
+## Defining Functions
+
+A function is defined with the following syntax:  
+```stack
+fun function_name {
+    // function body
+}
+```
+
+#### Example:
+
+```stack title="app.rpn"
+fun add {
+    + // Add the top two elements of the stack
+}
+```
+
+This defines a function `add` that pops the top two values from the stack, adds them, and pushes the result back.
+
+---
+
+## Calling Functions
+
+To call a function, simply type its name in the code block. The function will execute its body, using and manipulating the shared stack.
+
+#### Example:
+
+```stack title="app.rpn"
+2 3 add print
+```
+
+**Output**:
+
+```stack title="console"
+5
+```
+
+:::info
+**Explanation**:  
+1. `2` and `3` are pushed onto the stack.  
+2. The `add` function is called, which pops these two values, adds them, and pushes the result (`5`).  
+3. Finally, the result is printed.
+:::
+
+---
+
+## Arguments
+
+Functions can take arguments directly from the stack. To define arguments, use `(args...)`. When the function is called, the values for the arguments are popped from the stack in order.
+
+#### Syntax:
+
+```stack
+fun function_name (arg1 arg2 ...) {
+    // function body
+}
+```
+
+#### Example:
+
+```stack title="app.rpn"
+fun multiply (a b) {
+    a b * print
+}
+
+5 6 multiply
+```
+
+**Output**:
+
+```stack title="console"
+30
+```
+
+---
+
+### How the Stack Behaves with Arguments
+
+1. **Before the Function Call**:  
+   The arguments must be **pushed onto the stack** in the order they are defined in the function. For example, for a function defined as `fun my_function (a b c)`, the stack before the call should look like this:  
+   `[value_for_c, value_for_b, value_for_a]`.
+
+2. **During the Function Call**:  
+   When the function is called, it pops the required number of arguments from the stack. These values are assigned to the corresponding parameters (`a`, `b`, `c`).
+
+3. **Inside the Function**:  
+   The parameters behave like local variables that can be used within the function. The rest of the stack remains unchanged.
+
+4. **After the Function Call**:  
+   Once the function executes, the stack reflects the result of the function's operations. This may include new values pushed by the function or an empty stack if no value was pushed.
+
+---
+
+#### Example of Stack Behavior:
+
+```stack title="app.rpn"
+fun subtract (x y) {
+    x y - print
+}
+
+10 4 subtract
+```
+
+**Stack Behavior**:
+1. **Before Call**: `[10, 4]`  
+2. **During Call**:  
+   - `4` is assigned to `y`.  
+   - `10` is assigned to `x`.  
+   - The stack becomes empty.  
+3. **Inside Function**:  
+   - `x - y` (`10 - 4`) is calculated.  
+   - `6` is pushed onto the stack.  
+4. **After Call**: `[6]` is printed.
+
+---

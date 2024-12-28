@@ -188,3 +188,58 @@ In this method, the variable must be defined beforehand in the code.
 :::
 
 ---
+
+## Array And String Opreators
+
+
+### `len` Operator
+
+The `len` operator retrieves the length of a string or an array. It pops the value (`Str` or `Array`) from the stack, calculates its length, and pushes the result back onto the stack.
+
+---
+
+#### Example
+
+```stack title="app.rpn"
+"foo" len print
+```
+
+##### Output
+
+```stack title="console"
+3
+```
+
+:::info
+**Explanation**:  
+The string `"foo"` has a length of `3`. The `len` operator calculates this and pushes `3` onto the stack, which is then printed.
+:::
+
+---
+
+### `at` Operator
+
+The `at` operator retrieves the value at a given index from a string or array. It pops the string/array and the index from the stack and pushes the resulting value back onto the stack.
+
+:::info Behavior
+- Input: `[str index]`
+- After Operation: `[char]`
+:::
+---
+
+#### Example
+
+```stack title="app.rpn"
+"foo" 1 at print
+```
+
+##### Output
+
+```stack title="console"
+o
+```
+
+:::note
+**Explanation**:  
+The operator retrieves the character at index `1` of the string `"foo"`, which is `"o"`, and pushes it back onto the stack to be printed.
+:::
