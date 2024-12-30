@@ -192,10 +192,95 @@ In this method, the variable must be defined beforehand in the code.
 ## Array And String Opreators
 
 
+
+
+Arrays are versatile data structures that allow you to store multiple elements of *any type*. Arrays are pushed onto the stack using square brackets `[]`.
+
+---
+
+### Creating an Array
+
+To define an array, use `[]`. The elements inside the array are not separated by commas.
+
+```stack title="Example"
+[1 2 3] // Pushes an array with elements 1, 2, and 3 onto the stack
+```
+
+To create an array with a specified capacity, use the `c` operator:
+
+```stack title="Example"
+[0 0 0]c5 // Creates an array [0, 0, 0] with a capacity of 5
+```
+:::warning
+Currently, arrays use **reference copying** during operations. This means copying an array will not duplicate its contents but only create a reference to the original array. This behavior is still a **work in progress**.
+:::
+
+
+
+
+---
+
+### Setting Array Values
+
+The `set` operator updates a value in the array at a specific index. It requires three arguments from the stack in the following order:
+
+1. The value to set  
+2. The array  
+3. The index  - top of the stack
+
+The `set` operation updates the array in place.
+
+---
+
+#### Example: Updating an Array with `set`
+
+```stack title="app.rpn"
+// Step 1: Create an array
+[10 20 30] arr :=// Pushes the array onto the stack
+
+// Step 2: Specify the new value, array, and index
+99 arr 0 set // Sets array[0] = 99
+```
+
+**Stack Behavior**:
+1. Before `set`:  
+   `[99, [10, 20, 30], 0]`  
+2. After `set`:  
+   `[[99, 20, 30]]`
+
+---
+
+#### Complete Example: Using `set`
+
+```stack title="app.rpn"
+[5 10 15]c5   // Create an array [5, 10, 15] with capacity 5
+42 &arr :=    // Assign it to variable `arr`
+42 &arr 1 set // Update arr[1] = 42
+arr print     // Print the updated array
+```
+
+**Output**:
+
+```stack title="console"
+[5, 42, 15]
+```
+
+---
+
+#### Summary
+
+- Use `set` to modify array values in place.
+- It requires three stack arguments: the value, the array, and the index.
+- Arrays support flexible storage and can have their capacity explicitly defined.
+
+
 ### `len` Operator
 
 The `len` operator retrieves the length of a string or an array. It pops the value (`Str` or `Array`) from the stack, calculates its length, and pushes the result back onto the stack.
 
+:::info
+    'len' in case of returning array size returns `length` of array *not* the `capacity`
+:::
 ---
 
 #### Example
